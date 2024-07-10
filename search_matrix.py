@@ -1,15 +1,32 @@
-from collections import defaultdict
+def search_matrix(matrix, target):
+    if not matrix or not matrix[0]:
+        return False
 
-def group_anagrams(strs):
-    anagrams = defaultdict(list)
+    rows = len(matrix)
+    cols = len(matrix[0])
 
-    for s in strs:
-        sorted_str = ''.join(sorted(s))
-        anagrams[sorted_str].append(s)
+    left = 0
+    right = rows * cols - 1
 
-    return list(anagrams.values())
+    while left <= right:
+        mid = (left + right) // 2
+        mid_value = matrix[mid // cols][mid % cols]
 
+        if mid_value == target:
+            return True
+        elif mid_value < target:
+            left = mid + 1
+        else:
+            right = mid - 1
 
-strs = ["at", "tesa", "tan", "ate", "nat", "bat", "srgdkgrgvwo[ske]"]
-result = group_anagrams(strs)
-print(result)  
+    return False
+
+matrix = [
+    [1, 3, 5],
+    [7, 8, 15],
+    [12, 15, 18]
+]
+target = 8
+
+result = search_matrix(matrix, target)
+print(result) 
